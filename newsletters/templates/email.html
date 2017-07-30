@@ -41,7 +41,7 @@
   {% for entry in entries %}
   <div class="entry">
     <h2><a href="{{ entry.url }}">{{ entry.title }}</a></h2>
-    <p>By {{ entry.author }}</p>
+    <p>By <strong>{{ entry.author }}</strong></p>
     <p>{{ entry.summary|safe|striptags|truncatewords:100 }}</p>
     <p><a href="{{ entry.url }}">Read on.</a></p>
   </div>
