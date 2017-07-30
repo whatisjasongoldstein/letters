@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ subject }}</title>
+  <style type="text/css">
+    body {
+      max-width: 660px;
+      margin: 0 auto;
+      font-size: 16px;
+    }
+
+    a {
+      color: navy;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: 20px;
+    }
+
+    p {
+      margin: 0.5em 0;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid black;
+      height: 0;
+    }
+
+    .entry {
+      border-bottom: 1px solid #999;
+    }
+
+  </style>
+</head>
+<body>
+
+  <p>Your collection is ready! Here's what's new.</p>
+
+  {% for entry in entries %}
+  <div class="entry">
+    <h2><a href="{{ entry.url }}">{{ entry.title }}</a></h2>
+    <p>By {{ entry.author }}</p>
+    <p>{{ entry.summary|safe|striptags|truncatewords:100 }}</p>
+    <p><a href="{{ entry.url }}">Read on.</a></p>
+  </div>
+  {% endfor %}
+
+  <p>👋 See you next week.</p>
+
+</body>
+</html>
