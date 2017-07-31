@@ -7,5 +7,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for newsletter in Newsletter.objects.all():
             newsletter.update_sources()
-            newsletter.send()
-            self.stdout.write(self.style.SUCCESS('Sent to %s') % newsletter.email)
+            num = newsletter.num_unsent_entries
+            if num:
+                newsletter.send()
+                msg = "Sent %s entries to %s" % (num, newsletter.email)
+            else:
+                msg = "Nothing to send %s" % newsletter.email
+            self.stdout.write(self.style.SUCCESS(msg))
