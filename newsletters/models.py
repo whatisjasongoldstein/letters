@@ -67,7 +67,6 @@ class Source(models.Model):
     def update(self, mark_read=False):
         data = feedparser.parse(self.url)
         for entry in data["entries"][:25]:
-            print(entry["title"])
             obj, created = Entry.objects.get_or_create(
                 source=self,
                 url=entry["link"],
