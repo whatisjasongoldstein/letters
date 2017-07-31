@@ -64,22 +64,16 @@ class Source(models.Model):
     def __str__(self):
         return self.name or "Source"
 
-    def save(self, *args, **kwargs):
-        # Mark read the first time to avoid
-        # collecting everything, ever.
-        if not self.pk:
-            self.update(mark_read=True)
-        super(Source, self).save(*args, **kwargs)
-
     def update(self, mark_read=False):
         data = feedparser.parse(self.url)
-        for entry in data["entries"]:
+        for entry in data["entries"][:25]:
+            print(entry["title"])
             obj, created = Entry.objects.get_or_create(
                 source=self,
                 url=entry["link"],
                 defaults={
                     "title": entry["title"],
-                    "author": entry["author"],
+                    "author": entry.get("author") or data["feed"].get("author") or "",
                     "summary": entry["summary"],
                     "sent": mark_read,
                 })
