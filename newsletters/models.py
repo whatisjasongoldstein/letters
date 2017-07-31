@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import pytz
 import json
 import feedparser
 import datetime
@@ -84,8 +85,14 @@ class Source(models.Model):
                     "summary": entry["summary"],
                     "sent": mark_read,
                 })
-        self.last_updated = datetime.datetime.now()
+        self.last_updated = datetime.datetime.now(pytz.utc)
         self.save()
+
+    def save(self, *args, **kwargs):
+        is_new = not self.pk
+        super(Source, self).save(*args, **kwargs)
+        if is_new:
+            self.update(mark_read=True)
 
 
 class Entry(models.Model):
