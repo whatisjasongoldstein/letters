@@ -51,7 +51,7 @@ class Newsletter(models.Model):
         send_mail(
             "Your Letters collection is here (%s)!" % count,
             html,
-            'portfolios@scruffylogic.com',
+            'Letters from a Feed',
             [self.email],
             html_message=html,
             fail_silently=False,
