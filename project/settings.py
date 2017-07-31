@@ -29,6 +29,8 @@ DEBUG = "runserver" in sys.argv
 ALLOWED_HOSTS = [
     "letters.scruffylogic.com",
 ]
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
