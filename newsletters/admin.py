@@ -9,7 +9,7 @@ from .models import Newsletter, Source
 class SourceInline(admin.StackedInline):
     model = Source
     extra = 0
-    readonly_fields = ["last_updated", ]
+    readonly_fields = ["last_updated", "num_unsent_entries"]
 
 
 def sync(modeladmin, request, queryset):
@@ -26,7 +26,7 @@ send.short_description = "Send Newsletter Now"
 
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
-    list_display = ["email", "last_sent"]
+    list_display = ["email", "last_sent", "num_unsent_entries"]
     inlines = [SourceInline, ]
-    # readonly_fields = ["last_sent", ]
+    readonly_fields = ["last_sent", "num_unsent_entries"]
     actions = [sync, send, ]

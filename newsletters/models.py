@@ -27,6 +27,10 @@ class Newsletter(models.Model):
     def get_unsent_entries(self):
         return Entry.objects.filter(sent=False, source__newsletter=self)
 
+    @property
+    def num_unsent_entries(self):
+        return Entry.objects.filter(source__newsletter=self, sent=False).count()
+
     def send(self):
         entries = self.get_unsent_entries()
         count = entries.count()
@@ -63,6 +67,10 @@ class Source(models.Model):
 
     def __str__(self):
         return self.name or "Source"
+
+    @property
+    def num_unsent_entries(self):
+        return Entry.objects.filter(source=self, sent=False).count()
 
     def update(self, mark_read=False):
         data = feedparser.parse(self.url)
