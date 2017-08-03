@@ -66,6 +66,9 @@ class Source(models.Model):
     url = models.URLField()
     last_updated = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ('name', )
+
     def __str__(self):
         return self.name or "Source"
 
@@ -90,9 +93,10 @@ class Source(models.Model):
 
     def save(self, *args, **kwargs):
         is_new = not self.pk
-        super(Source, self).save(*args, **kwargs)
+        result = super(Source, self).save(*args, **kwargs)
         if is_new:
             self.update(mark_read=True)
+        return result
 
 
 class Entry(models.Model):
