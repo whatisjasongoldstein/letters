@@ -1,0 +1,71 @@
+body {
+  font-family: helvetica, sans-serif;
+  width: calc(100% - 60px);
+  max-width: 800px;
+  line-height: 1.4;
+  margin: 0 auto;
+}
+
+h1, h2 {
+  font-family: Georgia, serif;
+  margin: 0;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 2rem;
+}
+
+h2 {
+  font-style: italic;
+  color: #666;
+  font-size: 1.33rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.c-form {
+  background: #f5f5f5;
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
+
+.c-sources {
+  padding: 1em 0;
+  margin: 1em 0;
+  border-top: 1px solid #ccc;
+  list-style-type: none;
+}
+
+.c-source {
+  cursor: pointer;
+  margin: 0.5em 0;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.source-action {
+  margin: 0 .25em;
+}
+
+.c-messages {
+  padding: 0;
+  list-style-type: none;
+  font-weight: bold;
+}
+
+.c-messages .success {
+  color: darkgreen;
+}
+
+.c-messages .error {
+  color: red;
+}
+
+.c-messages .warn {
+  color: orange;
+}
