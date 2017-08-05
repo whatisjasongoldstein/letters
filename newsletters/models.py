@@ -58,6 +58,8 @@ class Newsletter(models.Model):
         )
 
         entries.update(sent=True)
+        self.last_sent = datetime.datetime.now(pytz.utc)
+        self.save()
 
 
 class Source(models.Model):
