@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'raven.contrib.django.raven_compat',
     'newsletters',
 ]
 
@@ -144,3 +145,11 @@ EMAIL_PORT = os.environ["LETTERS_EMAIL_PORT"]
 DEFAULT_FROM_EMAIL = os.environ["LETTERS_DEFAULT_FROM_EMAIL"]
 SERVER_EMAIL = os.environ["LETTERS_SERVER_EMAIL"]
 EMAIL_USE_TLS=True
+
+
+import raven
+if "RAVEN_DNS_WHATIS" in os.environ and not DEBUG:
+    RAVEN_CONFIG = {
+        'dsn': os.environ['RAVEN_DNS_LETTERS'],
+        'release': raven.fetch_git_sha(os.path.join(os.path.dirname(__file__), "../")),
+    }
