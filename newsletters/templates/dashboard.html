@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}  
-<p>This will come out at 8am every day when it has contents.</p>
+<p>Last sent {{ newsletter.last_sent }}. This will come out daily when it has contents.</p>
 
 {% if messages %}
 <ul class="c-messages">
@@ -26,6 +26,10 @@
         <a class="source-action" href="{{ source.url }}" target="_blank">[Preview]</a>
         <a class="source-action js-source-edit" href="#" data-edit="{{ source.id }}">[Edit]</a>
       </span>
+
+      {% if source.num_unsent_entries %}
+      <div class="meta">{{ source.num_unsent_entries }} entries pending</div>
+      {% endif %}
 
       <form class="c-form {% if not form.errors %} is-hidden{% endif %}" action="?update={{ source.id }}" method="POST" data-form="{{ source.id }}">
         {{ source.form.as_p }}
