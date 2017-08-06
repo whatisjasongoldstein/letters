@@ -70,6 +70,7 @@ class Source(models.Model):
 
     class Meta:
         ordering = ('name', )
+        unique_together = ('newsletter', 'url')
 
     def __str__(self):
         return self.name or "Source"
@@ -108,7 +109,7 @@ class Entry(models.Model):
     author = models.CharField(max_length=255)
     summary = models.TextField(default="")
     sent = models.BooleanField(default=False)
-    url = models.URLField()
+    url = models.URLField(max_length=2083)
 
     def __str__(self):
         return "%s: %s" % (self.author, self.title)
