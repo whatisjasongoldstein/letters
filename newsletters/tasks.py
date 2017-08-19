@@ -4,6 +4,7 @@ from .models import Newsletter, Source
 
 async def sync(source_id):
     source = Source.objects.get(id=source_id)
+    await asyncio.sleep(0)
     source.update()
 
 
