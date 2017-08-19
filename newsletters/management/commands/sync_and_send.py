@@ -1,16 +1,17 @@
 from django.core.management.base import BaseCommand, CommandError
-from newsletters.models import Newsletter
+from newsletters.tasks import sync_all, send_newsletters
 
 class Command(BaseCommand):
     help = 'Syncs all sources and sends newsletter'
 
     def handle(self, *args, **options):
-        for newsletter in Newsletter.objects.all():
-            newsletter.update_sources()
-            num = newsletter.num_unsent_entries
-            if num:
-                newsletter.send()
-                msg = "Sent %s entries to %s" % (num, newsletter.email)
-            else:
-                msg = "Nothing to send %s" % newsletter.email
-            self.stdout.write(self.style.SUCCESS(msg))
+        sync_all()
+        sent = send_newsletters()
+        if sent:
+            messages = []
+            for nl, num in sent.items():
+                messages.append("Sent %s entries to %s" % (num, nl))
+            msg = "\n".join(messages)
+        else:
+            msg = "Nothing to send."
+        self.stdout.write(self.style.SUCCESS(msg))
