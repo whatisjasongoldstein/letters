@@ -8,6 +8,7 @@
       margin: 0 auto;
       font-size: 16px;
       font-family: Georgia, serif;
+      line-height: 1.4;
     }
 
     a {
@@ -15,7 +16,7 @@
     }
 
     h2 {
-      margin-bottom: 0;
+      margin: 0;
       font-size: 20px;
     }
 
@@ -29,8 +30,29 @@
       height: 0;
     }
 
+    figure {
+      margin: 1em 0;
+    }
+
+    figcaption {
+      color: #777;
+      font-size: 0.8em;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    blockquote {
+      border-left: 2px solid #ccc;
+      padding: 1em;
+      margin: 0;
+    }
+
     .entry {
       border-bottom: 1px solid #999;
+      padding: 2em 0;
     }
 
   </style>
@@ -43,7 +65,7 @@
   <div class="entry">
     <h2><a href="{{ entry.url }}">{{ entry.title }}</a></h2>
     <p>By <strong>{{ entry.author }}</strong></p>
-    <p>{{ entry.summary|safe|striptags|truncatewords:100 }}</p>
+    <div>{{ entry.summary|truncatewords_html:"250"|safe }}</div>
     <p><a href="{{ entry.url }}">Read on.</a></p>
   </div>
   {% endfor %}

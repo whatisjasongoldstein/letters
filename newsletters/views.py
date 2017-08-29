@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 
-from .models import Newsletter, Source
+from .models import Newsletter, Source, Entry
 from .forms import SourceForm
 
 
@@ -60,4 +60,14 @@ def dashboard(request):
         "newsletter": newsletter,
         "add_form": add_form,
         "sources": sources,
+    })
+
+
+@login_required
+def preview(request):
+    entries = Entry.objects.all()[:10]
+
+    return render(request, "email.html", {
+        "number": entries.count(),
+        "entries": entries,
     })

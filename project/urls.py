@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.contrib.auth.views import logout
 from django.contrib.auth import views as auth_views
 
-from newsletters.views import dashboard
+from newsletters.views import dashboard, preview
 
 urlpatterns = [
     url(r'^$', dashboard, name="dashboard"),
+    url(r'^preview/$', preview, name="preview"),
     url(r'^accounts/login/$', auth_views.LoginView.as_view(), name="login"),
     url(r'^accounts/logout/$', auth_views.logout_then_login, name="logout"),
     url(r'^admin/', admin.site.urls),
