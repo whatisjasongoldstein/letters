@@ -65,7 +65,7 @@ def dashboard(request):
 
 @login_required
 def preview(request):
-    entries = Entry.objects.all()[:10]
+    entries = Entry.objects.all().order_by("-downloaded")[:10]
 
     return render(request, "email.html", {
         "number": entries.count(),
