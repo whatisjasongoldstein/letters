@@ -1,24 +1,20 @@
-import asyncio
+from multiprocessing import Pool
+
 from .models import Newsletter, Source
 
 
-async def sync(source_id):
+def sync(source_id):
     source = Source.objects.get(id=source_id)
-    await asyncio.sleep(0)
     source.update()
 
 
 def sync_all(newsletter=None):
+    pool = Pool(5)
     qs = Source.objects.all()
     if newsletter:
         qs = qs.filter(newsletter=newsletter)
     ids = list(qs.values_list("id", flat=True))
-
-    # Sync each one asynchronously
-    loop = asyncio.get_event_loop()
-    tasks = [sync(i) for i in ids]
-    loop.run_until_complete(asyncio.gather(*tasks))
-    loop.close()
+    pool.map(sync, ids)
 
 
 def send_newsletters():
