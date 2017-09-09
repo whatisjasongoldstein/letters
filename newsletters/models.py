@@ -5,7 +5,6 @@ import pytz
 import json
 import feedparser
 import datetime
-import premailer
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -35,21 +34,20 @@ class Newsletter(models.Model):
     def send(self):
         entries = self.get_unsent_entries()
         count = entries.count()
-        authors = list(entries.values_list("author", flat=True).distinct())[:10]
-        subject = "Letters from %s" % (", ".join("authors"))
 
         if not count:
             return
+
+        authors = list(entries.values_list("author", flat=True).distinct())[:10]
+        authors = ", ".join(authors)
 
         html = render_to_string("email.html", {
             "number": count,
             "entries": entries,
         })
 
-        html = premailer.Premailer(html).transform()
-
         send_mail(
-            "Your Letters collection is here (%s)!" % count,
+            "%s Letters from %s" % (count, authors),
             html,
             'Letters from a Feed',
             [self.email],

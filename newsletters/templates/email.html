@@ -3,25 +3,26 @@
 <head>
   <title>{{ subject }}</title>
   <style type="text/css">
-    body {
+    .content {
       max-width: 660px;
       margin: 0 auto;
-      font-size: 16px;
-      font-family: Georgia, serif;
+      font-size: 18px;
+      font-family: Georgia, "Times New Roman", serif;
       line-height: 1.4;
     }
 
-    a {
+    a, a:visited {
       color: navy;
     }
 
     h2 {
       margin: 0;
-      font-size: 20px;
+      font-size: 24px;
     }
 
     p {
       margin: 0.5em 0;
+      font-size: 18px;
     }
 
     hr {
@@ -58,19 +59,20 @@
   </style>
 </head>
 <body>
+  <div class="content">
+    <p>Your collection is ready! Here's what's new.</p>
 
-  <p>Your collection is ready! Here's what's new.</p>
+    {% for entry in entries %}
+    <div class="entry">
+      <h2><a href="{{ entry.url }}">{{ entry.title }}</a></h2>
+      <p>By <strong>{{ entry.author }}</strong></p>
+      <div class="summary">{{ entry.summary|truncatewords_html:"250"|safe }}</div>
+      <p><a href="{{ entry.url }}">Read on.</a></p>
+    </div>
+    {% endfor %}
 
-  {% for entry in entries %}
-  <div class="entry">
-    <h2><a href="{{ entry.url }}">{{ entry.title }}</a></h2>
-    <p>By <strong>{{ entry.author }}</strong></p>
-    <div>{{ entry.summary|truncatewords_html:"250"|safe }}</div>
-    <p><a href="{{ entry.url }}">Read on.</a></p>
+    <p>👋 See! You don't need no social media.</p>
   </div>
-  {% endfor %}
-
-  <p>👋 See! You don't need no social media.</p>
 
 </body>
 </html>
