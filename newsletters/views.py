@@ -25,9 +25,6 @@ def dashboard(request):
     # Set forms on existing sources
     sources = newsletter.source_set.all().order_by(Lower('name'))
     for source in sources:
-        source.form = SourceForm(request.POST or None,
-            instance=source,
-            prefix="source-%s" % source.id)
 
         # Handle updates
         is_updating = False
@@ -35,6 +32,11 @@ def dashboard(request):
             is_updating = (int(request.GET.get("update", None)) == source.id)
         except (ValueError, TypeError):
             pass
+
+        # Only bind the form to POST if its the one being updated
+        source.form = SourceForm(request.POST if is_updating else None,
+            instance=source,
+            prefix="source-%s" % source.id)
 
         if request.POST and is_updating and source.form.is_valid():
 
@@ -48,8 +50,11 @@ def dashboard(request):
             return form_complete(request, "Updated %s!" % source.name)
 
     # Set up new source form
-    add_form = SourceForm(request.POST or None, prefix="new-source",
+    is_adding = "add" in request.GET
+    add_form = SourceForm(request.POST if is_adding else None,
+        prefix="new-source",
         initial={"newsletter": newsletter})
+
     if add_form.is_valid():
         obj = add_form.save(commit=False)
         obj.newsletter = newsletter

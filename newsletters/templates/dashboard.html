@@ -31,7 +31,7 @@
       <div class="meta">{{ source.num_unsent_entries }} entries pending</div>
       {% endif %}
 
-      <form class="c-form {% if not form.errors %} is-hidden{% endif %}" action="?update={{ source.id }}" method="POST" data-form="{{ source.id }}">
+      <form class="c-form {% if not source.form.errors %} is-hidden{% endif %}" action="?update={{ source.id }}" method="POST" data-form="{{ source.id }}">
         {{ source.form.as_p }}
         {% csrf_token %}
         <input type="submit" name="Save">
