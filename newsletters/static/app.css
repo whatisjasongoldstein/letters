@@ -67,9 +67,18 @@ h2 {
 }
 
 .c-messages .error {
-  color: red;
+  color: maroon;
 }
 
 .c-messages .warn {
   color: orange;
+}
+
+.errorlist {
+  list-style-type: none;
+  padding: 0;
+  font-size: 0.85em;
+  font-weight: bold;
+  color: maroon;
+  margin: 0;
 }
