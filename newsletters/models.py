@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import requests
 import pytz
 import json
 import feedparser
@@ -78,7 +79,11 @@ class Source(models.Model):
         return Entry.objects.filter(source=self, sent=False).count()
 
     def update(self, mark_read=False):
-        data = feedparser.parse(self.url)
+        # Brad Frost's feed starts with a newline,
+        # throwing off feedparser.
+        content = requests.get(self.url).content.strip()
+        data = feedparser.parse(content)
+        
         for entry in data["entries"][:25]:
             obj, created = Entry.objects.get_or_create(
                 source=self,
