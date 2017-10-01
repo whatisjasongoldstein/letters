@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from .models import Newsletter, Source
+from .models import Newsletter, Source, Entry
 
 
 class SourceInline(admin.StackedInline):
@@ -30,3 +30,11 @@ class NewsletterAdmin(admin.ModelAdmin):
     inlines = [SourceInline, ]
     readonly_fields = ["last_sent", "num_unsent_entries"]
     actions = [sync, send, ]
+
+
+@admin.register(Entry)
+class EntryAdmin(admin.ModelAdmin):
+    list_display = ["title", "author", "source", "sent", ]
+    list_filter = ["source", "author"]
+    search_fields = ["title", "author", ]
+

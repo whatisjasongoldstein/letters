@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import logging
 import requests
 import pytz
 import json
@@ -11,6 +12,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+
+
+logger = logging.getLogger(__name__)
 
 
 class Newsletter(models.Model):
@@ -81,7 +85,12 @@ class Source(models.Model):
     def update(self, mark_read=False):
         # Brad Frost's feed starts with a newline,
         # throwing off feedparser.
-        content = requests.get(self.url).content.strip()
+        try:
+            content = requests.get(self.url).content.strip()
+        except requests.exceptions.ConnectionError:
+            logger.error('Could not sync %s' % self.url)
+            return
+
         data = feedparser.parse(content)
         
         for entry in data["entries"][:25]:
@@ -90,7 +99,9 @@ class Source(models.Model):
                 url=entry["link"],
                 defaults={
                     "title": entry["title"],
-                    "author": entry.get("author") or data["feed"].get("author") or "",
+                    "author": (entry.get("author") or 
+                               data["feed"].get("author") or
+                               self.name),
                     "summary": entry["summary"],
                     "sent": mark_read,
                 })
@@ -113,6 +124,9 @@ class Entry(models.Model):
     summary = models.TextField(default="")
     sent = models.BooleanField(default=False)
     url = models.URLField(max_length=2083)
+
+    class Meta:
+        verbose_name_plural = "Entries"
 
     def __str__(self):
         return "%s: %s" % (self.author, self.title)
