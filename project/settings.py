@@ -36,6 +36,8 @@ if DEBUG:
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # One year
+
 # Application definition
 
 INSTALLED_APPS = [
