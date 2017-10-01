@@ -37,6 +37,7 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365  # One year
+SESSION_COOKIE_SECURE = not DEBUG
 
 # Application definition
 
