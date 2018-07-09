@@ -12,6 +12,7 @@ Django = "==1.11.5"
 requests = "*"
 
 [dev-packages]
+"fabric3" = "*"
 
 [requires]
 python_version = "3.6"
