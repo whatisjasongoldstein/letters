@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 class Newsletter(models.Model):
     email = models.EmailField()
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     last_sent = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
@@ -66,7 +66,7 @@ class Newsletter(models.Model):
 
 
 class Source(models.Model):
-    newsletter = models.ForeignKey(Newsletter, null=True)
+    newsletter = models.ForeignKey(Newsletter, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=255)
     url = models.URLField()
     last_updated = models.DateTimeField(auto_now_add=True)
@@ -117,7 +117,7 @@ class Source(models.Model):
 
 
 class Entry(models.Model):
-    source = models.ForeignKey(Source)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE)
     downloaded = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=512)
     author = models.CharField(max_length=255)

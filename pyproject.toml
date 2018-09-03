@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "letters"
+version = "0.1.0"
+description = ""
+authors = ["Jason Goldstein <jason@betheshoe.com>"]
+
+[tool.poetry.dependencies]
+python = "3.6.*"
+gunicorn = "^19.9"
+psycopg2 = "^2.7"
+Django = "^2.1"
+feedparser = "^5.2"
+requests = "^2.19"
+raven = "^6.9"
+
+[tool.poetry.dev-dependencies]
+fabric3 = "^1.14"
