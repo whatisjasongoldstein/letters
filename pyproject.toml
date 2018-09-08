@@ -12,6 +12,7 @@ Django = "^2.1"
 feedparser = "^5.2"
 requests = "^2.19"
 raven = "^6.9"
+django-sendgrid-v5 = "^0.6.893"
 
 [tool.poetry.dev-dependencies]
 fabric3 = "^1.14"

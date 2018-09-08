@@ -54,7 +54,7 @@ class Newsletter(models.Model):
         send_mail(
             "%s Letters from %s" % (count, authors),
             html,
-            'Letters from a Feed',
+            settings.DEFAULT_FROM_EMAIL,
             [self.email],
             html_message=html,
             fail_silently=False,

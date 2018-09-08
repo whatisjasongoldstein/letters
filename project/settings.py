@@ -137,17 +137,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = os.environ["LETTERS_SENDGRID_KEY"]
+
 if 'test' in sys.argv:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-EMAIL_HOST = os.environ["LETTERS_EMAIL_HOST"]
-EMAIL_HOST_USER = os.environ["LETTERS_EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = os.environ["LETTERS_EMAIL_HOST_PASSWORD"]
-EMAIL_PORT = os.environ["LETTERS_EMAIL_PORT"]
+# EMAIL_HOST = os.environ["LETTERS_EMAIL_HOST"]
+# EMAIL_HOST_USER = os.environ["LETTERS_EMAIL_HOST_USER"]
+# EMAIL_HOST_PASSWORD = os.environ["LETTERS_EMAIL_HOST_PASSWORD"]
+# EMAIL_PORT = os.environ["LETTERS_EMAIL_PORT"]
 DEFAULT_FROM_EMAIL = os.environ["LETTERS_DEFAULT_FROM_EMAIL"]
-SERVER_EMAIL = os.environ["LETTERS_SERVER_EMAIL"]
-EMAIL_USE_TLS=True
+# SERVER_EMAIL = os.environ["LETTERS_SERVER_EMAIL"]
+# EMAIL_USE_TLS=False
 
 
 import raven
