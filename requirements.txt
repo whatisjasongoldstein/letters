@@ -1,5 +1,0 @@
-Django==1.11.5
-psycopg2==2.7.3
-feedparser==5.2.1
-gunicorn==19.7.1
-raven==6.1.0
