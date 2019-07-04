@@ -1,0 +1,7 @@
+Django==2.2.3
+psycopg2==2.8.3
+feedparser==5.2.1
+gunicorn==19.9.0
+requests==2.22.0
+raven==6.10.0
+django-sendgrid-v5==0.8.0
