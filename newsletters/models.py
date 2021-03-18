@@ -93,14 +93,14 @@ class Source(models.Model):
             return
 
         data = feedparser.parse(content)
-        
+
         for entry in data["entries"][:25]:
             obj, created = Entry.objects.get_or_create(
                 source=self,
                 url=entry["link"],
                 defaults={
                     "title": entry["title"],
-                    "author": (entry.get("author") or 
+                    "author": (entry.get("author") or
                                data["feed"].get("author") or
                                self.name),
                     "summary": entry["summary"],

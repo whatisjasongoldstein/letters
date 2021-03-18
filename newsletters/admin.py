@@ -34,7 +34,8 @@ class NewsletterAdmin(admin.ModelAdmin):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ["title", "author", "source", "sent", ]
+    list_display = ["title", "author", "source", "sent", "downloaded"]
     list_filter = ["source", "author"]
     search_fields = ["title", "author", ]
+    ordering = ["-downloaded", ]
 
